@@ -4,6 +4,8 @@ import weaviate.classes as wvc
 client = utils.connect_to_db()
 
 client.collections.delete("Movie")
+client.collections.delete("Review")
+client.collections.delete("Synopsis")
 
 reviews = client.collections.create(
     name="Review",
@@ -38,7 +40,7 @@ movies = client.collections.create(
         ),
         wvc.config.Property(
             name="year",
-            data_type=wvc.config.DataType.TEXT,
+            data_type=wvc.config.DataType.INT,
         ),
         wvc.config.Property(
             name="rating",

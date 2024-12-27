@@ -99,8 +99,6 @@ for i, row in movie_df.iterrows():
     # Generate a UUID for the movie
     movie_uuid = generate_uuid5(row["ID"])
 
-    # Create a reference object with the "hasSynopsis" property
-    # Hint: use the "wvc.data.DataReference" class
     ref_obj = wvc.data.DataReference(
         from_property="hasSynopsis", from_uuid=movie_uuid, to_uuid=movie_uuid
     )
@@ -108,8 +106,6 @@ for i, row in movie_df.iterrows():
     # Add the reference object to the list
     synopses_refs.append(ref_obj)
 
-# Add the references to the collection
-# Hint: use the "movies.data.reference_add_many" method
 response = movies.data.reference_add_many(synopses_refs)
 
 print(f"Insertion complete with {len(synopses_refs)} objects.")
