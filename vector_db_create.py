@@ -59,7 +59,31 @@ movies = client.collections.create(
     ]
 )
 
+synopses = client.collections.create(
+    name="Synopsis",
+    vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(),
+    generative_config=wvc.config.Configure.Generative.openai(model="gpt-4-1106-preview"),
+    properties=[
+        wvc.config.Property(
+            name="body",
+            data_type=wvc.config.DataType.TEXT,
+        ),
+    ],
+    # A reference property with name "forMovie". Points to the "Movie" collection
+    references=[
+        wvc.config.ReferenceProperty(
+            name="forMovie",
+            target_collection="Movie",
+        )
+    ],
+)
 
+movies.config.add_reference(
+    wvc.config.ReferenceProperty(
+        name="hasSynopsis",
+        target_collection="Synopsis"
+    )
+)
 
 
 client.close()
